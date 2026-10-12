@@ -336,3 +336,83 @@ html[lang="tg"] .contact__title{max-width:20ch}
   .js-deal .steps{flex:1 1 auto;height:auto;min-height:0;margin-top:10px}
   .js-deal .dossier{flex:none}
 }
+
+/* ── Варианты подачи для банка: длинный заголовок, «что нужно от банка», расчёт дохода ── */
+.hero__title--long{font-size:clamp(34px,7vw,118px)}
+html[lang="tg"] .hero__title--long{font-size:clamp(30px,5.6vw,98px)}
+.gain>.terms:first-child{margin-top:0}
+.band+.gain{margin-top:clamp(80px,14vh,170px)}
+.task+.deal{margin-top:0}
+.need__say{margin:clamp(40px,7vh,84px) 0 0 var(--col2);font:300 clamp(23px,3vw,48px)/1.16 var(--display);letter-spacing:-.03em;max-width:27ch;text-wrap:balance}
+.calc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start;margin-left:var(--col2)}
+.calc__in{border-top:1px solid var(--ink)}
+.calc__cap{padding:14px 0;border-bottom:1px solid var(--rule);color:var(--signal-ink)}
+.calc__f{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:baseline;padding:13px 0 12px;border-bottom:1px solid var(--rule)}
+.calc__f>*{transition:opacity .3s}   /* гасим содержимое, а не строку: саму строку проявляет GSAP */
+.calc__f span{font-size:15.5px;color:var(--dim)}
+.calc__f output{font:500 clamp(18px,1.55vw,23px)/1.2 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.calc__f.is-off>*{opacity:.38}
+.calc__f input{grid-column:1/-1;width:100%;height:26px;margin:0;background:none;-webkit-appearance:none;appearance:none;cursor:pointer}
+.calc__f input::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(var(--ink),var(--ink)) 0 0/var(--fill,50%) 100% no-repeat,var(--rule)}
+.calc__f input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-8.5px;border-radius:50%;background:var(--ink);border:4px solid var(--paper);box-shadow:0 0 0 1.5px var(--ink)}
+.calc__f input::-moz-range-track{height:3px;border-radius:2px;background:var(--rule)}
+.calc__f input::-moz-range-progress{height:3px;border-radius:2px;background:var(--ink)}
+.calc__f input::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--ink);border:4px solid var(--paper);box-shadow:0 0 0 1.5px var(--ink)}
+.calc__f input:focus-visible{outline:2px solid var(--signal-ink);outline-offset:2px;border-radius:4px}
+.calc__lc{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15.5px;cursor:pointer}
+.calc__lc input{width:20px;height:20px;margin:0;accent-color:var(--ink)}
+.calc__card{position:sticky;top:calc(var(--top-h) + 28px);padding:clamp(20px,2.4vw,34px);border-radius:14px;background:var(--ink);color:#eef2f6}
+.calc__card .mono{color:#ff8a5c}
+.calc__rows{margin-top:16px}
+.calc__row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 0;border-top:1px solid rgba(238,242,246,.2)}
+.calc__row dt{color:rgba(238,242,246,.82);font-size:16px}
+.calc__row dd{font:500 clamp(18px,1.6vw,24px)/1.2 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.calc__total{padding-top:20px;border-top:1px solid #eef2f6}
+.calc__total .mono{display:block;color:rgba(238,242,246,.82)}
+.calc__total b{display:block;margin-top:10px;font:500 clamp(44px,5.4vw,88px)/.95 var(--display);letter-spacing:-.045em;color:var(--signal);font-variant-numeric:tabular-nums;white-space:nowrap}
+.calc__note{margin:clamp(26px,4vh,40px) 0 0 var(--col2);max-width:86ch;text-transform:none;letter-spacing:.01em}
+@media (max-width:899px){
+  .calc__grid{grid-template-columns:1fr;margin-left:0}
+  .calc__card{position:static}
+  .calc__bar{display:flex}
+  .calc__note{margin-left:0}
+}
+@media (max-width:699px){.need__say{margin-left:0}}
+
+/* ── Правки после приёмки трёх вариантов ── */
+/* первый экран: заголовок не проваливается вниз, пустоты над ним нет */
+.hero--fit{min-height:min(calc(100svh - 20px - var(--top-h)),700px)}
+/* однотипные светлые блоки подряд — пауза короче */
+.gain:has(+.gain){padding-bottom:clamp(48px,8vh,92px)}
+.gain+.gain{padding-top:clamp(48px,8vh,92px)}
+.task:has(+.deal){padding-bottom:clamp(36px,6vh,64px)}
+/* сноска при крупной цифре — мелкая и рядом с ней */
+.task__facts dt sup{font-size:13px;margin-left:.1em;top:.35em}
+/* уголки досье убраны: читались как недоделанный декор */
+.dossier::before,.dossier::after{content:none}
+/* итог расчёта — строка, которая на телефоне держится под шапкой, пока двигаешь ползунки */
+.calc__bar{display:none;position:sticky;top:calc(var(--top-h) + 6px);z-index:5;align-items:baseline;justify-content:space-between;gap:12px;margin:10px 0 2px;padding:11px 14px;border-radius:10px;background:var(--ink);color:#eef2f6}
+.calc__bar .mono{color:rgba(238,242,246,.82)}
+.calc__bar b{font:500 24px/1 var(--display);letter-spacing:-.03em;color:var(--signal);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:899px){.calc__bar{display:flex}}
+@media (max-width:699px){
+  .hero--fit{min-height:0}
+  .hero--fit .hero__title{margin-top:clamp(40px,8vh,72px);padding-top:0;font-size:clamp(34px,9.2vw,40px)}
+  html[lang="tg"] .hero--fit .hero__title{font-size:clamp(30px,8vw,36px)}
+  .gain,.check,.flows{padding-top:68px;padding-bottom:68px}
+  .gain:has(+.gain){padding-bottom:52px}
+  .gain+.gain{padding-top:52px}
+  .pilot{padding-top:68px;padding-bottom:60px}
+  .task{padding-top:72px;padding-bottom:60px}
+  .task:has(+.deal){padding-bottom:36px}
+  .deal,.band+.gain,.head--second{margin-top:68px}
+  .task+.deal{margin-top:0}
+  .terms{margin-top:52px}
+  .gain>.terms:first-child{margin-top:0}
+}
+/* фото-полоса перед светлым блоком: одна пауза вместо двух */
+.band+.gain{margin-top:clamp(56px,9vh,100px);padding-top:clamp(56px,9vh,100px)}
+@media (max-width:699px){
+  .band+.gain{margin-top:52px;padding-top:52px}
+  .task:has(+.deal){padding-bottom:56px}
+}

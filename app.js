@@ -1,3 +1,33 @@
+/* Расчёт дохода банка на одной сделке. Стоит отдельно: считает и там, где анимация выключена. */
+(function () {
+  var box = document.querySelector('.calc');
+  if (!box) return;
+  var f = {}, v = {}, o = {};
+  box.querySelectorAll('[data-k]').forEach(function (el) { f[el.dataset.k] = el; });
+  box.querySelectorAll('[data-v]').forEach(function (el) { v[el.dataset.v] = el; });
+  box.querySelectorAll('[data-o]').forEach(function (el) { o[el.dataset.o] = el; });
+  var totals = box.querySelectorAll('[data-o=total]');   // итог показан дважды: в карточке и в строке над ползунками на телефоне
+  var eur = function (n) { return Math.round(n).toLocaleString('ru-RU').replace(/\s/g, ' ') + ' €'; };
+  var pct = function (x) { return String(+x).replace('.', ',') + ' %'; };
+  function run() {
+    var sum = +f.sum.value, on = f.lcOn.checked;
+    var pay = sum * f.pay.value / 100, fx = sum * f.fx.value / 100, lc = on ? sum * f.lc.value / 100 : 0;
+    var intr = sum * f.share.value / 100 * f.rate.value / 100 * f.term.value / 12;
+    v.sum.textContent = eur(sum);
+    ['pay', 'fx', 'lc', 'share', 'rate'].forEach(function (k) { v[k].textContent = pct(f[k].value); });
+    v.term.textContent = f.term.value;
+    o.pay.textContent = eur(pay); o.fx.textContent = eur(fx); o.lc.textContent = on ? eur(lc) : '—';
+    o.int.textContent = eur(intr);
+    totals.forEach(function (el) { el.textContent = eur(pay + fx + lc + intr); });
+    f.lc.disabled = !on; f.lc.parentNode.classList.toggle('is-off', !on);
+    box.querySelectorAll('input[type=range]').forEach(function (el) {
+      el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100).toFixed(2) + '%');
+    });
+  }
+  box.addEventListener('input', run);
+  run();
+})();
+
 /* Движение. Без этого файла страница остаётся цельной: шаги идут списком, досье заполнено. */
 (function () {
   var root = document.documentElement;
@@ -159,13 +189,13 @@
         }
       });
     });
-    ['.ledger', '.ticks', '.crosses', '.pilot__steps', '.trio ul', '.terms ol'].forEach(function (sel) {
+    ['.ledger', '.ticks', '.crosses', '.pilot__steps', '.trio ul', '.terms ol', '.calc__in', '.calc__rows'].forEach(function (sel) {
       gsap.utils.toArray(sel).forEach(function (list) {
         gsap.from(list.children, { y: 24, autoAlpha: 0, duration: 0.75, ease: 'power3.out', stagger: 0.07,
           scrollTrigger: { trigger: list, start: 'top 84%' } });
       });
     });
-    gsap.utils.toArray('.flows__say, .check__say, .gain__say').forEach(function (p) {
+    gsap.utils.toArray('.flows__say, .check__say, .gain__say, .need__say, .calc__total').forEach(function (p) {
       gsap.from(p, { y: 26, autoAlpha: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 86%' } });
     });
   }
