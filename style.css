@@ -416,3 +416,10 @@ html[lang="tg"] .hero__title--long{font-size:clamp(30px,5.6vw,98px)}
   .band+.gain{margin-top:52px;padding-top:52px}
   .task:has(+.deal){padding-bottom:56px}
 }
+
+/* ── Вторая приёмка ── */
+/* щель между шапкой и строкой итога закрыта фоном листа: под ней не мелькают подписи ползунков */
+.calc__bar{box-shadow:0 -8px 0 0 var(--paper)}
+@media (max-width:699px){.task:has(+.deal){padding-bottom:80px}}
+/* сноска у крупной цифры на компьютере — у единицы измерения, а не под потолком строки */
+@media (min-width:700px){.task__facts dt sup{font-size:max(.13em,13px);vertical-align:baseline;top:-1.15em;margin-left:.2em}}
