@@ -423,3 +423,14 @@ html[lang="tg"] .hero__title--long{font-size:clamp(30px,5.6vw,98px)}
 @media (max-width:699px){.task:has(+.deal){padding-bottom:80px}}
 /* сноска у крупной цифры на компьютере — у единицы измерения, а не под потолком строки */
 @media (min-width:700px){.task__facts dt sup{font-size:max(.13em,13px);vertical-align:baseline;top:-1.15em;margin-left:.2em}}
+
+/* ── Третья приёмка ── */
+/* первый экран на компьютере: высоту задаёт содержимое, заголовок стоит сразу под верхней строкой,
+   снизу начинает показываться следующий блок */
+@media (min-width:700px){
+  .hero--fit{min-height:0}
+  .hero--fit .hero__title{margin-top:clamp(40px,7.5vh,72px);padding-top:0}
+  .task__facts dt{word-spacing:-.1em}
+  .task__facts dt span{word-spacing:0}
+  .task__facts dt sup{font-size:max(.16em,15px);top:-.95em}
+}
